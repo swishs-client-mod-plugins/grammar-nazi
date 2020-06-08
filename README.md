@@ -7,6 +7,8 @@ A powercord plugin that forces you to use semi-correct grammar.
 * Always capitalize lowercase 'i's when they are on their own.
 
 ## To Do:
+* Don't correct message if it's just a link.
 * Add options to disable each individual setting.
+* Correct messages when embedding an image.
 * General library of words to autocorrect.
-* Ability to make a personal library of words to autocorrect.
+* Ability to make a personal library of words to autocorrect.=
