@@ -6,8 +6,10 @@ A powercord plugin that forces you to use semi-correct grammar.
 * Always add punctuation at the end.
 * Always capitalize lowercase 'i's when they are on their own.
 
+## Done:
+* Ignore links.
+
 ## To Do:
-* Don't correct message if it's just a link.
 * Add options to disable each individual setting.
 * Correct messages when embedding an image.
 * General library of words to autocorrect.
