@@ -23,9 +23,10 @@ module.exports = class GrammarNazi extends Plugin {
 				if(question){
 				  break;
 				}
-			  }
+			  }			  
 			// Detect if message is a link
 			if (text.slice(0,8) == "https://" || text.slice(0,7) == "http://") {
+			} else if(text.slice(0,3) == "```") {
 			} else if(question == true) {
 				text = text.charAt(0).toUpperCase() + text.slice(1) + '?';
 				text = text.replace(/i /g, "I ");
