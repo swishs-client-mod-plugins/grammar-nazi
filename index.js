@@ -30,7 +30,7 @@ module.exports = class GrammarNazi extends Plugin {
 			// Detect if message has apothWords	  
 			for(let k = 0; k < apothWords.length; k++){
 				apoth = (text.includes(apothWords[k])) ? true : false;
-				text = text.replace(/doesnt /g, "doesn't ").replace(/cant /g, "can't ").replace(/wont /g, "won't ").replace(/dont /g, "don't ").replace(/ive /g, "I've ").replace(/id /g, "I'd ").replace(/im /g, "I'm ").replace(/shes /g, "she's ").replace(/hes /g, "he's ").replace(/its /g, "it's ").replace(/theres /g, "there's ").replace(/theyre /g, "they're ").replace(/youve /g, "you've ").replace(/youre /g, "you're ").replace(/couldnt /g, "couldn't ").replace(/shouldnt /g, "shouldn't ").replace(/wouldnt /g, "wouldn't ").replace(/lets /g, "let's "); //lmao wtf is this line t-t
+				text = text.replace(/ doesnt /g, " doesn't ").replace(/ cant /g, " can't ").replace(/ wont /g, " won't ").replace(/ dont /g, " don't ").replace(/ ive /g, " I've ").replace(/ id /g, " I'd ").replace(/ im /g, " I'm ").replace(/ shes /g, " she's ").replace(/ hes /g, " he's ").replace(/ its /g, " it's ").replace(/ theres /g, " there's ").replace(/ theyre /g, " they're ").replace(/ youve /g, " you've ").replace(/ youre /g, " you're ").replace(/ couldnt /g, " couldn't ").replace(/ shouldnt /g, " shouldn't ").replace(/ wouldnt /g, " wouldn't ").replace(/ lets /g, " let's "); //lmao wtf is this line t-t
 				if(apoth){
 				  break;
 				}
@@ -40,7 +40,7 @@ module.exports = class GrammarNazi extends Plugin {
 			} else if(text.slice(0,3) == "```") { // Code Block Detection
 			} else if(question == true) {
 				text = text.charAt(0).toUpperCase() + text.slice(1) + '?';
-				text = text.replace(/i /g, "I ");
+				text = text.replace(/ i /g, " I ");
 				if (text.slice(text.length-2) == "i?") { 
 					text = text.slice(0,text.length-2) + "I?"; // Correct sentences like "Who am I?"
 				} 
@@ -50,7 +50,7 @@ module.exports = class GrammarNazi extends Plugin {
                 // Forces Punctuation
                 text = (text[text.length - 1] == "!" || text[text.length - 1] == "?" || text[text.length - 1] == ".") ?  text : text + '.';
                 // Forces Upercase "I"s
-				text = text.replace(/i /g, "I ");
+				text = text.replace(/ i /g, " I ");
             }
 
 			args[1].content = text;
