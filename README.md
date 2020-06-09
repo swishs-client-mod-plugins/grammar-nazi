@@ -9,6 +9,7 @@ A powercord plugin that forces you to use semi-correct grammar.
 ## Done:
 * Ignore links.
 * Ignore code brackets.
+* Autocorrect words that contain apostrophes. (Like I'm and Doesn't)
 * Certain words automatically add a question mark at the end.
 
 ## To Do:
