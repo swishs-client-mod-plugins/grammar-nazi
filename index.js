@@ -1,54 +1,17 @@
 const { Plugin } = require("powercord/entities");
-const { findInReactTree, forceUpdateElement, getOwnerInstance, waitFor } = require('powercord/util')
 const { inject, uninject } = require("powercord/injector");
 const { getModule } = require("powercord/webpack");
 
-const Settings = require('./Settings')
-
 module.exports = class GrammarNazi extends Plugin {
-    async startPlugin() {
-        powercord.api.settings.registerSettings('Grammar Nazi', {
-            category: this.entityID,
-			label: 'Grammar Nazi',
-			render: Settings
-		})
-		/*powercord.api.settings.registerSettings('capitalize', {
-            category: this.entityID,
-			label: 'Grammar Nazi',
-			render: Settings
-		})*/
-
-/*module.exports = class GrammarNazi extends Plugin {
 	constructor() {
 		super();
 	}
 
 	async startPlugin() {
 		this.inject();
-	}*/
-	if (this.settings.get('punctuation')) {
-		const MessageEvents = await getModule(["sendMessage"]);
-		inject("send.", MessageEvents, "sendMessage", function (args) {
-			let text = args[1].content.trim();
-			text = (text[text.length - 1] == "!" || text[text.length - 1] == "?" || text[text.length - 1] == ".") ?  text : text + '.';
+	}
 
-			args[1].content = text;
-            return args;
-		}, true);
-	}
-	if (this.settings.get('ignorebot')) {
-		const MessageEvents = await getModule(["sendMessage"]);
-		inject("send.", MessageEvents, "sendMessage", function(args) {
-			let message = args[1].content.trim();
-			const botPrefix = ['!', '.', 'pls', ';;', ';', '?'];
-			for (let k = 0; k < botPrefix.length; k++) {
-				if (text.startsWith(botPrefix[k])) ? true : false) {
-					return;
-				}
-			}
-		});
-	}
-	/*async inject() {
+	async inject() {
 		const MessageEvents = await getModule(["sendMessage"]);
 		inject("send.", MessageEvents, "sendMessage", function (args) {
 			let text = args[1].content.trim();
@@ -94,13 +57,9 @@ module.exports = class GrammarNazi extends Plugin {
             return args;
 
 		}, true);
-	}*/
-}
+	}
 
 	pluginWillUnload() {
-		powercord.api.settings.unregisterSettings('Grammar Nazi')
-		//powercord.api.settings.unregisterSettings('capitalize')
-        //uninject('punctuation')
 		uninject("send.");
 	}
 };
