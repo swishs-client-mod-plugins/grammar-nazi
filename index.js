@@ -17,7 +17,9 @@ module.exports = class GrammarNazi extends Plugin {
 			let text = args[1].content.trim();
 			var question = false;
 			var apoth = false;
+			var botcmd = false;
 			var textBeg = text.slice(0,6);
+			const botPrefix = ['!', '.', 'pls', ';;', ';', '?'];
 			const questionWords = ['who', 'what', 'when', 'where', 'why', 'how', 'can i'];
 			const apothWords = ['doesnt', 'cant', 'wont', 'dont', 'ive', 'id', 'im', 'shes', 'hes', 'its', 'theres', 'theyre', 'youve', 'youre', 'couldnt', 'shouldnt', 'wouldnt', 'lets'];
             // Detect if message is a question
@@ -35,7 +37,13 @@ module.exports = class GrammarNazi extends Plugin {
 				  break;
 				}
 			  }
-
+			for (let k = 0; k < botPrefix.length; k++) {
+				botcmd = (text.startsWith(botPrefix[k])) ? true : false;
+				text = text
+				if (botcmd) {
+					return;
+				}
+				}
 			if (text.slice(0,8) == "https://" || text.slice(0,7) == "http://") { // Message Link Detection
 			} else if(text.slice(0,3) == "```") { // Code Block Detection
 			} else if(question == true) {
