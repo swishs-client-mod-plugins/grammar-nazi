@@ -99,9 +99,9 @@ module.exports = class GrammarNazi extends Plugin {
               .replace(/ couldnt /g, " couldn't ")
               .replace(/ shouldnt /g, " shouldn't ")
               .replace(/ wouldnt /g, " wouldn't ")
-              .replace(/ lets /g, " let's "); //lmao wtf is this line t-t
+              .replace(/ lets /g, " let's ");
             if (apoth) {
-              return;
+              break;
             }
           }
         }
@@ -117,7 +117,7 @@ module.exports = class GrammarNazi extends Plugin {
         for (let k = 0; k < botPrefix.length; k++) {
           botcmd = text.startsWith(botPrefix[k]) ? true : false;
           if (botcmd) {
-            return;
+            break;
           }
         }
 
