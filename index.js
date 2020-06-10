@@ -36,6 +36,18 @@ module.exports = class GrammarNazi extends Plugin {
             return args;
 		}, true);
 	}
+	if (this.settings.get('ignorebot')) {
+		const MessageEvents = await getModule(["sendMessage"]);
+		inject("send.", MessageEvents, "sendMessage", function(args) {
+			let message = args[1].content.trim();
+			const botPrefix = ['!', '.', 'pls', ';;', ';', '?'];
+			for (let k = 0; k < botPrefix.length; k++) {
+				if (text.startsWith(botPrefix[k])) ? true : false) {
+					return;
+				}
+			}
+		});
+	}
 	/*async inject() {
 		const MessageEvents = await getModule(["sendMessage"]);
 		inject("send.", MessageEvents, "sendMessage", function (args) {
