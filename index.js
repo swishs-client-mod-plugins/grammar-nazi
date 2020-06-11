@@ -41,13 +41,35 @@ module.exports = class GrammarNazi extends Plugin {
 				const apothWords = ['doesnt', 'cant', 'wont', 'dont', 'ive', 'id', 'im', 'shes', 'hes', 'its', 'theres', 'theyre', 'youve', 'youre', 'couldnt', 'shouldnt', 'wouldnt', 'lets']; 
 				for(let k = 0; k < apothWords.length; k++){
 					apoth = (text.includes(apothWords[k])) ? true : false;
-					text = text.replace(/ doesnt /g, " doesn't ").replace(/ cant /g, " can't ").replace(/ wont /g, " won't ").replace(/ dont /g, " don't ").replace(/ ive /g, " I've ").replace(/ id /g, " I'd ").replace(/ im /g, " I'm ").replace(/ shes /g, " she's ").replace(/ hes /g, " he's ").replace(/ its /g, " it's ").replace(/ theres /g, " there's ").replace(/ theyre /g, " they're ").replace(/ youve /g, " you've ").replace(/ youre /g, " you're ").replace(/ couldnt /g, " couldn't ").replace(/ shouldnt /g, " shouldn't ").replace(/ wouldnt /g, " wouldn't ").replace(/ lets /g, " let's "); //lmao wtf is this line t-t
-					if(apoth){
+					text = text
+					.replace(/ doesnt /g, " doesn't ")
+					.replace(/ cant /g, " can't ")
+					.replace(/ wont /g, " won't ")
+					.replace(/ dont /g, " don't ")
+					.replace(/ ive /g, " I've ")
+					.replace(/ id /g, " I'd ")
+           		   		.replace(/ im /g, " I'm ")
+             		 		.replace(/ shes /g, " she's ")
+            		  		.replace(/ hes /g, " he's ")
+           	   			.replace(/ its /g, " it's ")
+            		  		.replace(/ theres /g, " there's ")
+            	 	 		.replace(/ theyre /g, " they're ")
+          	    			.replace(/ youve /g, " you've ")
+					.replace(/ youre /g, " you're ")
+        	      			.replace(/ couldnt /g, " couldn't ")
+ 	           	  		.replace(/ shouldnt /g, " shouldn't ")
+              				.replace(/ wouldnt /g, " wouldn't ")
+					.replace(/ lets /g, " let's ");
+					if (text.toLowerCase().slice(0,2) ==  "im") {
+						text = "I'm" + text.slice(2);
+					}
+			  		if(apoth){
 				  	break;
 					}
 				}
 			}
-			
+					
+
 			if(question) {
 				text = text.charAt(0).toUpperCase() + text.slice(1) + '?';
 				text = text.replace(/ i /g, " I ");
@@ -67,10 +89,12 @@ module.exports = class GrammarNazi extends Plugin {
 			if (properis) {
 				text = text.replace(/ i /g, " I ");
 			}
-			
+
 			if (text.toLowerCase().slice(0,8) == "https://" || text.slice(0,7) == "http://") { // Message Link Detection
 				text = pretext;
 			} else if(text.slice(0,3) == "```") { // Code Block Detection
+				text = pretext;
+			} else if(text.slice(0) == ":") {
 				text = pretext;
 			}  else {
 			    args[1].content = text;
