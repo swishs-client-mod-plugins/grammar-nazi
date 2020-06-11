@@ -11,9 +11,9 @@ A powercord plugin that forces you to use semi-correct grammar.
 * Ignore code brackets.
 * Autocorrect words that contain apostrophes. (Like I'm and Doesn't)
 * Certain words automatically add a question mark at the end.
+* Options to disable each individual setting.
 
 ## To Do:
-* Add options to disable each individual setting.
 * Correct grammar when dealing with linebreaks.
 * Correct messages when embedding an image.
 * General library of words to autocorrect.
