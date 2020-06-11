@@ -7,6 +7,7 @@ const {
 } = require("powercord/util");
 const { inject, uninject } = require("powercord/injector");
 const { getModule } = require("powercord/webpack");
+var SpellCorrector = require("./node_modules/spelling-corrector");
 
 const Settings = require("./Settings");
 
@@ -22,8 +23,12 @@ module.exports = class GrammarNazi extends Plugin {
     var capt = this.settings.get("capitalize");
     var properis = this.settings.get("proper is");
     var quWords = this.settings.get("questionwords");
-	var apWords = this.settings.get("apothwords");
-	
+	  var apWords = this.settings.get("apothwords");
+    var checkSpell = this.settings.get("checkspell");
+    
+    var spellCheck = new SpellCorrector();
+    spellCheck.loadDictionary();
+
     const MessageEvents = await getModule(["sendMessage"]);
     inject(
       "send.",
@@ -35,6 +40,12 @@ module.exports = class GrammarNazi extends Plugin {
         var botcmd = false;
         const botPrefix = ["!", ".", "pls", ";;", ";", "?"];
 
+        for (let k = 0; k < botPrefix.length; k++) {
+          botcmd = text.startsWith(botPrefix[k]) ? true : false;
+          if (botcmd) {
+            return args;
+          }
+        }
         //Question Words
         if (quWords) {
           const questionWords = [
@@ -114,13 +125,6 @@ module.exports = class GrammarNazi extends Plugin {
           }
         }
 
-        for (let k = 0; k < botPrefix.length; k++) {
-          botcmd = text.startsWith(botPrefix[k]) ? true : false;
-          if (botcmd) {
-            break;
-          }
-        }
-
         if (punct) {
           text =
             text[text.length - 1] == "!" ||
@@ -151,6 +155,20 @@ module.exports = class GrammarNazi extends Plugin {
         } else {
           args[1].content = text;
         }
+
+        if (true) {
+          console.log("i gotta spell check");
+          var textasafuckingarray = text.split(" ");
+          console.log(textasafuckingarray);
+          var newtext = "";
+          textasafuckingarray.forEach(function(substring) {
+            newtext = newtext + spellCheck.correct(substring) + " ";
+          });
+          console.log(newtext);
+          text = newtext;
+        }
+        
+        args[1].content = text;
         return args;
       },
       true

@@ -23,6 +23,15 @@ module.exports = class Settings extends React.PureComponent {
         >
             Toggle Capitalize First Letter 
         </SwitchItem>
+        <SwitchItem
+            value={ this.props.getSetting('checkSpell') }
+            onChange={ () => {
+                this.props.toggleSetting('checkSpell')
+                this.props.reload()
+            }}
+        >
+            Toggle Automatic Spellchecking
+        </SwitchItem>
         </div>
         );
     }
