@@ -12,7 +12,7 @@ module.exports = class Settings extends React.PureComponent {
                 this.props.reload()
             }}
         >
-            Toggle Punctuation
+            Forced Punctuation
         </SwitchItem>
         <SwitchItem
             value={ this.props.getSetting('capitalize') }
@@ -21,7 +21,7 @@ module.exports = class Settings extends React.PureComponent {
                 this.props.reload()
             }}
         >
-            Toggle Capitalize First Letter 
+            Capitalize First Letter 
         </SwitchItem>
         <SwitchItem
             value={ this.props.getSetting('proper is') }
@@ -30,7 +30,7 @@ module.exports = class Settings extends React.PureComponent {
                 this.props.reload()
             }}
         >
-            Capitalize I's when they are on their own
+            Auto Capitalize Lowercase I's
         </SwitchItem>
         <SwitchItem
             value={ this.props.getSetting('questionwords') }
@@ -39,7 +39,7 @@ module.exports = class Settings extends React.PureComponent {
                 this.props.reload()
             }}
         >
-            Toggle Question Words
+            Automatic Question Detection
         </SwitchItem>
         <SwitchItem
             value={ this.props.getSetting('apothwords') }
@@ -48,7 +48,7 @@ module.exports = class Settings extends React.PureComponent {
                 this.props.reload()
             }}
         >
-            Autocorrect words that usually have apostrophe's
+            General Autocorrect Library
         </SwitchItem>
         </div>
         );
