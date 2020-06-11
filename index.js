@@ -162,7 +162,11 @@ module.exports = class GrammarNazi extends Plugin {
           console.log(textasafuckingarray);
           var newtext = "";
           textasafuckingarray.forEach(function(substring) {
-            newtext = newtext + spellCheck.correct(substring) + " ";
+            if(substring.includes("'")) {
+              newtext = newtext + substring;
+            } else {
+              newtext = newtext + spellCheck.correct(substring) + " ";
+            }
           });
           console.log(newtext);
           text = newtext;
