@@ -38,7 +38,8 @@ module.exports = class GrammarNazi extends Plugin {
 			// Apostrophe Words
 			if (apWords) {
 				var apoth = false;
-				const apothWords = ['doesnt', 'cant', 'wont', 'dont', 'ive', 'id', 'im', 'shes', 'hes', 'its', 'theres', 'theyre', 'youve', 'youre', 'couldnt', 'shouldnt', 'wouldnt', 'lets']; 
+				const apothWords = ['doesnt', 'cant', 'wont', 'dont', 'ive', 'id', 'im', 'shes', 'hes', 'its', 'theres', 'theyre', 'youve', 'youre', 'couldnt', 'shouldnt', 'wouldnt', 'lets'];
+				const apCorWords = ["doesn't", "can't", "won't", "don't", "I've", "I'd", "I'm", "she's", "he's", "it's", "there's", "they're", "you've", "you're", "couldn't", "shouldn't", "wouldn't", "let's"]; 
 				for(let k = 0; k < apothWords.length; k++){
 					apoth = (text.includes(apothWords[k])) ? true : false;
 					text = text
@@ -48,21 +49,23 @@ module.exports = class GrammarNazi extends Plugin {
 					.replace(/ dont /g, " don't ")
 					.replace(/ ive /g, " I've ")
 					.replace(/ id /g, " I'd ")
-           		   		.replace(/ im /g, " I'm ")
-             		 		.replace(/ shes /g, " she's ")
-            		  		.replace(/ hes /g, " he's ")
-           	   			.replace(/ its /g, " it's ")
-            		  		.replace(/ theres /g, " there's ")
-            	 	 		.replace(/ theyre /g, " they're ")
-          	    			.replace(/ youve /g, " you've ")
+					.replace(/ im /g, " I'm ")
+					.replace(/ shes /g, " she's ")
+					.replace(/ hes /g, " he's ")
+					.replace(/ its /g, " it's ")
+					.replace(/ theres /g, " there's ")
+					.replace(/ theyre /g, " they're ")
+					.replace(/ youve /g, " you've ")
 					.replace(/ youre /g, " you're ")
-        	      			.replace(/ couldnt /g, " couldn't ")
- 	           	  		.replace(/ shouldnt /g, " shouldn't ")
-              				.replace(/ wouldnt /g, " wouldn't ")
+					.replace(/ couldnt /g, " couldn't ")
+					.replace(/ shouldnt /g, " shouldn't ")
+					.replace(/ wouldnt /g, " wouldn't ")
 					.replace(/ lets /g, " let's ");
-					if (text.toLowerCase().slice(0,2) ==  "im") {
-						text = "I'm" + text.slice(2);
+					
+					if (text.toLowerCase().slice(0,apothWords[k].length) == apothWords[k]) {
+						text = apCorWords[k] + text.slice(apCorWords[k].length-1);
 					}
+
 			  		if(apoth){
 				  	break;
 					}
@@ -94,9 +97,11 @@ module.exports = class GrammarNazi extends Plugin {
 				text = pretext;
 			} else if(text.slice(0,3) == "```") { // Code Block Detection
 				text = pretext;
-			} else if(text.slice(0) == ":") {
+			} else if(text.slice(0,4) == "I'dk") { //temporary fix
 				text = pretext;
-			}  else {
+			} else if(text.charAt(0) == "." || text.charAt(0) == "!" || text.charAt(0) == "?" || text.charAt(0) == ";" || text.charAt(0) == ";;" || text.charAt(0) == ":") { // ill fix this line twomarrow t-t
+				text = pretext;
+			} else {
 			    args[1].content = text;
 			}
             return args;
