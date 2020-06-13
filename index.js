@@ -2,6 +2,7 @@ const { Plugin } = require("powercord/entities");
 const { findInReactTree, forceUpdateElement, getOwnerInstance, waitFor } = require('powercord/util')
 const { inject, uninject } = require("powercord/injector");
 const { getModule } = require("powercord/webpack");
+var SpellCorrector = require("./node_modules/spelling-corrector");
 
 const Settings = require('./Settings')
 
@@ -19,6 +20,11 @@ module.exports = class GrammarNazi extends Plugin {
 		var quWords = this.settings.get("questionwords");
 		var apWords = this.settings.get("apothwords");
 		var exAbrv = this.settings.get("extendAbrv");
+		var checkSpell = this.settings.get("spellCheck");
+
+		var spellCheck = new SpellCorrector();
+		spellCheck.loadDictionary();
+	
 		const MessageEvents = await getModule(["sendMessage"]);
 		inject("send.", MessageEvents, "sendMessage", function (args) {
 			let text = args[1].content.trim();
@@ -92,6 +98,22 @@ module.exports = class GrammarNazi extends Plugin {
 
 
 			}
+
+			if (checkSpell) {
+				console.log("i gotta spell check");
+				var textasafuckingarray = text.split(" ");
+				console.log(textasafuckingarray);
+				var newtext = "";
+				textasafuckingarray.forEach(function(substring) {
+				  if(substring.includes("'")) {
+					newtext = newtext + substring;
+				  } else {
+					newtext = newtext + spellCheck.correct(substring) + " ";
+				  }
+				});
+				console.log(newtext);
+				text = newtext;
+			  }
 					
 
 			if(question) {
@@ -123,6 +145,8 @@ module.exports = class GrammarNazi extends Plugin {
 			} else {
 			    args[1].content = text;
 			}
+
+			  
             return args;
 		}, true);
 }
