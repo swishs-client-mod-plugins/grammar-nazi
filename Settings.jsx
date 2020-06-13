@@ -12,7 +12,7 @@ module.exports = class Settings extends React.PureComponent {
                 this.props.reload()
             }}
         >
-            Toggle Punctuation
+            Forced Punctuation
         </SwitchItem>
         <SwitchItem
             value={ this.props.getSetting('capitalize') }
@@ -21,16 +21,52 @@ module.exports = class Settings extends React.PureComponent {
                 this.props.reload()
             }}
         >
-            Toggle Capitalize First Letter 
+            Capitalize First Letter 
         </SwitchItem>
         <SwitchItem
-            value={ this.props.getSetting('checkSpell') }
+            value={ this.props.getSetting('proper is') }
             onChange={ () => {
-                this.props.toggleSetting('checkSpell')
+                this.props.toggleSetting('proper is')
                 this.props.reload()
             }}
         >
-            Toggle Automatic Spellchecking
+            Auto Capitalize Lowercase I's
+        </SwitchItem>
+        <SwitchItem
+            value={ this.props.getSetting('questionwords') }
+            onChange={ () => {
+                this.props.toggleSetting('questionwords')
+                this.props.reload()
+            }}
+        >
+            Automatic Question Detection
+        </SwitchItem>
+        <SwitchItem
+            value={ this.props.getSetting('apothwords') }
+            onChange={ () => {
+                this.props.toggleSetting('apothwords')
+                this.props.reload()
+            }}
+        >
+            General Autocorrect Library
+        </SwitchItem>
+        <SwitchItem
+            value={ this.props.getSetting('extendAbrv') }
+            onChange={ () => {
+                this.props.toggleSetting('extendAbrv')
+                this.props.reload()
+            }}
+        >
+            Extend Abbreviations
+        </SwitchItem>
+        <SwitchItem
+            value={ this.props.getSetting('spellCheck') }
+            onChange={ () => {
+                this.props.toggleSetting('spellCheck')
+                this.props.reload()
+            }}
+        >
+            Node Spell Corrector Library
         </SwitchItem>
         </div>
         );
