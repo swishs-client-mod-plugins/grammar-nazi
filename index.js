@@ -46,8 +46,14 @@ module.exports = class GrammarNazi extends Plugin {
 					apoth = (text.includes(apothWords[k])) ? true : false;
 
 					text = text.replace(" " + apothWords[k] + " ", " " + apCorWords[k] + " ");
+
+					if (text.slice(0, apothWords[k].length) == apothWords[k]) {
 					text = text.replace(apothWords[k] + " ", apCorWords[k] + " ");
+					}
+
+					if (text.slice(text.length - apothWords[k].length) ==  apothWords[k]) {
 					text = text.replace(" " + apothWords[k], " " + apCorWords[k]);
+					}
 
 				}
 			}
@@ -73,8 +79,14 @@ module.exports = class GrammarNazi extends Plugin {
 					abrv = (text.includes(abrvWords[k])) ? true : false;
 
 					text = text.replace(" " + abrvWords[k] + " ", " " + fullAbrvWords[k] + " ");
+					
+					if (text.slice(0, abrvWords[k].length) == abrvWords[k]) {
 					text = text.replace(abrvWords[k] + " ", fullAbrvWords[k] + " ");
+					} 
+					
+					if (text.slice(text.length - abrvWords[k].length) ==  abrvWords[k]) {
 					text = text.replace(" " + abrvWords[k], " " + fullAbrvWords[k]);
+					}
 
 				}
 
