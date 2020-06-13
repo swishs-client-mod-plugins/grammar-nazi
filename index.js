@@ -7,7 +7,7 @@ const {
 } = require("powercord/util");
 const { inject, uninject } = require("powercord/injector");
 const { getModule } = require("powercord/webpack");
-var SpellCorrector = require("./node_modules/spelling-corrector");
+var SpellCorrector = require("/spelling-corrector");
 
 const Settings = require("./Settings");
 
