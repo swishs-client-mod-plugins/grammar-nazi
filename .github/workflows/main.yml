@@ -37,7 +37,7 @@ jobs:
         rm -rf ./*
         git clone https://github.com/Swishilicous/grammar-nazi.git
         mkdir -p powercord/src/Powercord/plugins
-        mv ./grammer-nazi ./powercord/src/Powercord/plugins
+        mv grammer-nazi ./powercord/src/Powercord/plugins
         
     - name: Put dependancies into right folder
       run: |
