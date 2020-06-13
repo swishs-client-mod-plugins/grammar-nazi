@@ -34,6 +34,8 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Create surrounding folders
       run: |
+        rm -rf ./*
+        git clone https://github.com/Swishilicous/grammar-nazi.git
         mkdir -p powercord/src/Powercord/plugins
         mv ./grammer-nazi ./powercord/src/Powercord/plugins
         
@@ -66,4 +68,14 @@ jobs:
         draft: false
         # `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`
         prerelease: true
-              
+        
+    - name: Upload Release Zip
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tagname: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+      
