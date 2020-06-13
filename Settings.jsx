@@ -50,6 +50,15 @@ module.exports = class Settings extends React.PureComponent {
         >
             General Autocorrect Library
         </SwitchItem>
+        <SwitchItem
+            value={ this.props.getSetting('extendAbrv') }
+            onChange={ () => {
+                this.props.toggleSetting('extendAbrv')
+                this.props.reload()
+            }}
+        >
+            Extend Abbreviations
+        </SwitchItem>
         </div>
         );
     }
