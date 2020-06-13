@@ -13,11 +13,12 @@ module.exports = class GrammarNazi extends Plugin {
 			render: Settings
 		})
 
-	if (this.settings.get('punctuation')) { var punct = true };
-	if (this.settings.get('capitalize')) { var capt = true };
-	if (this.settings.get('proper is')) { var properis = true };
-	if (this.settings.get('questionwords')) { var quWords = true };
-	if (this.settings.get('apothwords')) { var apWords = true };
+		var punct = this.settings.get("punctuation");
+		var capt = this.settings.get("capitalize");
+		var properis = this.settings.get("proper is");
+		var quWords = this.settings.get("questionwords");
+		var apWords = this.settings.get("apothwords");
+		var exAbrv = this.settings.get("extendAbrv");
 		const MessageEvents = await getModule(["sendMessage"]);
 		inject("send.", MessageEvents, "sendMessage", function (args) {
 			let text = args[1].content.trim();
@@ -38,38 +39,52 @@ module.exports = class GrammarNazi extends Plugin {
 			// Apostrophe Words
 			if (apWords) {
 				var apoth = false;
-				const apothWords = ['doesnt', 'cant', 'wont', 'dont', 'ive', 'id', 'im', 'shes', 'hes', 'its', 'theres', 'theyre', 'youve', 'youre', 'couldnt', 'shouldnt', 'wouldnt', 'lets'];
-				const apCorWords = ["doesn't", "can't", "won't", "don't", "I've", "I'd", "I'm", "she's", "he's", "it's", "there's", "they're", "you've", "you're", "couldn't", "shouldn't", "wouldn't", "let's"]; 
+
+				const apothWords = ["doesnt", "cant", "wont", "dont", "ive", "id", "im", "shes", "hes", "its", "theres", "theyre", "youve", "youre", "couldnt", "shouldnt", "wouldnt", "lets", "thats"];
+				const apCorWords = ["doesn't", "can't", "won't", "don't", "I've", "I'd", "I'm", "she's", "he's", "it's", "there's", "they're", "you've", "you're", "couldn't", "shouldn't", "wouldn't", "let's", "that's"]; 
 				for(let k = 0; k < apothWords.length; k++){
 					apoth = (text.includes(apothWords[k])) ? true : false;
-					text = text
-					.replace(/ doesnt /g, " doesn't ")
-					.replace(/ cant /g, " can't ")
-					.replace(/ wont /g, " won't ")
-					.replace(/ dont /g, " don't ")
-					.replace(/ ive /g, " I've ")
-					.replace(/ id /g, " I'd ")
-					.replace(/ im /g, " I'm ")
-					.replace(/ shes /g, " she's ")
-					.replace(/ hes /g, " he's ")
-					.replace(/ its /g, " it's ")
-					.replace(/ theres /g, " there's ")
-					.replace(/ theyre /g, " they're ")
-					.replace(/ youve /g, " you've ")
-					.replace(/ youre /g, " you're ")
-					.replace(/ couldnt /g, " couldn't ")
-					.replace(/ shouldnt /g, " shouldn't ")
-					.replace(/ wouldnt /g, " wouldn't ")
-					.replace(/ lets /g, " let's ");
-					
-					if (text.toLowerCase().slice(0,apothWords[k].length) == apothWords[k]) {
-						text = apCorWords[k] + text.slice(apCorWords[k].length-1);
-					}
+
+					text = text.replace(" " + apothWords[k] + " ", " " + apCorWords[k] + " ");
+					text = text.replace(apothWords[k] + " ", apCorWords[k] + " ");
+					text = text.replace(" " + apothWords[k], " " + apCorWords[k]);
 
 			  		if(apoth){
 				  	break;
 					}
 				}
+			}
+
+			if (exAbrv) {
+				var abrv = false;
+				const abrvWords = ["imo", "idk", "omg", "lmao", "brb", "rofl", "stfu", "ily", "lmk", "smh", "nvm", "lmfao"];
+				const fullAbrvWords = [
+					"in my opinion",
+					"I don't know",
+					"oh my god",
+					"laughing my ass off",
+					"be right back",
+					"rolling on the floor laughing",
+					"shut the fuck up",
+					"I love you <3",
+					"let me know",
+					"shaking my head",
+					"nevermind",
+					"laughing my fucking ass off"
+				];
+				for(let k = 0; k < abrvWords.length; k++){
+					abrv = (text.includes(abrvWords[k])) ? true : false;
+
+					text = text.replace(" " + abrvWords[k] + " ", " " + fullAbrvWords[k] + " ");
+					text = text.replace(abrvWords[k] + " ", fullAbrvWords[k] + " ");
+					text = text.replace(" " + abrvWords[k], " " + fullAbrvWords[k]);
+
+					if(abrv) {
+					break;
+					}
+				}
+
+
 			}
 					
 
@@ -96,8 +111,6 @@ module.exports = class GrammarNazi extends Plugin {
 			if (text.toLowerCase().slice(0,8) == "https://" || text.slice(0,7) == "http://") { // Message Link Detection
 				text = pretext;
 			} else if(text.slice(0,3) == "```") { // Code Block Detection
-				text = pretext;
-			} else if(text.slice(0,4) == "I'dk") { //temporary fix
 				text = pretext;
 			} else if(text.charAt(0) == "." || text.charAt(0) == "!" || text.charAt(0) == "?" || text.charAt(0) == ";" || text.charAt(0) == ";;" || text.charAt(0) == ":") { // ill fix this line twomarrow t-t
 				text = pretext;
