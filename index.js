@@ -51,6 +51,18 @@ module.exports = class GrammarNazi extends Plugin {
 				for(let k = 0; k < apothWords.length; k++){
 					apoth = (text.includes(apothWords[k])) ? true : false;
 
+					if (checkSpell) {
+						/*text = text.replace(" " + apothWords[k] + " ", " " + apCorWords[k] + "  ");
+
+						if (text.slice(0, apothWords[k].length) == apothWords[k]) {
+							text = text.replace(apothWords[k] + " ", apCorWords[k] + "  ");
+							}
+		
+						if (text.slice(text.length - apothWords[k].length) ==  apothWords[k]) {
+							text = text.replace(" " + apothWords[k], " " + apCorWords[k] + "  ");
+						}*/ // working on this
+						
+					} else {
 					text = text.replace(" " + apothWords[k] + " ", " " + apCorWords[k] + " ");
 
 					if (text.slice(0, apothWords[k].length) == apothWords[k]) {
@@ -60,6 +72,7 @@ module.exports = class GrammarNazi extends Plugin {
 					if (text.slice(text.length - apothWords[k].length) ==  apothWords[k]) {
 					text = text.replace(" " + apothWords[k], " " + apCorWords[k]);
 					}
+				  }
 
 				}
 			}
@@ -108,7 +121,7 @@ module.exports = class GrammarNazi extends Plugin {
 				  if(substring.includes("'")) {
 					newtext = newtext + substring;
 				  } else {
-					newtext = newtext + spellCheck.correct(substring) + " ";
+						newtext = newtext + spellCheck.correct(substring) + " ";
 				  }
 				});
 				console.log(newtext);
@@ -117,8 +130,11 @@ module.exports = class GrammarNazi extends Plugin {
 					
 
 			if(question) {
-				text = text.charAt(0).toUpperCase() + text.slice(1) + '?';
-				text = text.replace(/ i /g, " I ");
+				if (checkSpell) {
+				text = text.replace(/.$/,"?");
+				} else {
+					text = text + "?";
+				}
 				if (text.slice(text.length-2) == "i?") { 
 					text = text.slice(0,text.length-2) + "I?"; // Correct sentences like "Who am I?"
 				} 
@@ -126,7 +142,11 @@ module.exports = class GrammarNazi extends Plugin {
 
 
 			if (punct) {
-				text = (text[text.length - 1] == "!" || text[text.length - 1] == "?" || text[text.length - 1] == ".") ?  text : text + '.';
+				if (checkSpell) {
+				text = (text[text.length - 1] == "!" || text[text.length - 1] == "?" || text[text.length - 1] == ".") ?  text : text = text.replace(/.$/,".");
+				} else {
+					text = (text[text.length - 1] == "!" || text[text.length - 1] == "?" || text[text.length - 1] == ".") ?  text : text = text + ".";
+				}
 			}
 
 			if (capt) {
