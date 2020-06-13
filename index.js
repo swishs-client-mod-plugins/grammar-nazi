@@ -113,18 +113,15 @@ module.exports = class GrammarNazi extends Plugin {
 			}
 
 			if (checkSpell) {
-				console.log("i gotta spell check");
 				var textasafuckingarray = text.split(" ");
-				console.log(textasafuckingarray);
 				var newtext = "";
 				textasafuckingarray.forEach(function(substring) {
 				  if(substring.includes("'")) {
-					newtext = newtext + substring;
+					newtext = newtext + substring + " ";
 				  } else {
 						newtext = newtext + spellCheck.correct(substring) + " ";
 				  }
 				});
-				console.log(newtext);
 				text = newtext;
 			  }
 					
