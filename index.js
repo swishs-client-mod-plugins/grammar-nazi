@@ -49,9 +49,6 @@ module.exports = class GrammarNazi extends Plugin {
 					text = text.replace(apothWords[k] + " ", apCorWords[k] + " ");
 					text = text.replace(" " + apothWords[k], " " + apCorWords[k]);
 
-			  		if(apoth){
-				  	break;
-					}
 				}
 			}
 
@@ -79,9 +76,6 @@ module.exports = class GrammarNazi extends Plugin {
 					text = text.replace(abrvWords[k] + " ", fullAbrvWords[k] + " ");
 					text = text.replace(" " + abrvWords[k], " " + fullAbrvWords[k]);
 
-					if(abrv) {
-					break;
-					}
 				}
 
 
