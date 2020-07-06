@@ -59,15 +59,6 @@ module.exports = class Settings extends React.PureComponent {
         >
             Extend Abbreviations
         </SwitchItem>
-        <SwitchItem
-            value={ this.props.getSetting('spellCheck') }
-            onChange={ () => {
-                this.props.toggleSetting('spellCheck')
-                this.props.reload()
-            }}
-        >
-            Node Spell Corrector Library
-        </SwitchItem>
         </div>
         );
     }
