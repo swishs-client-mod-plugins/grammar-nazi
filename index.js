@@ -2,7 +2,6 @@ const { Plugin } = require("powercord/entities");
 const { findInReactTree, forceUpdateElement, getOwnerInstance, waitFor } = require('powercord/util')
 const { inject, uninject } = require("powercord/injector");
 const { getModule } = require("powercord/webpack");
-var SpellCorrector = require("./node_modules/spelling-corrector");
 
 const Settings = require('./Settings')
 
@@ -20,11 +19,7 @@ module.exports = class GrammarNazi extends Plugin {
 		var quWords = this.settings.get("questionwords");
 		var apWords = this.settings.get("apothwords");
 		var exAbrv = this.settings.get("extendAbrv");
-		var checkSpell = this.settings.get("spellCheck");
 
-		var spellCheck = new SpellCorrector();
-		spellCheck.loadDictionary();
-	
 		const MessageEvents = await getModule(["sendMessage"]);
 		inject("send.", MessageEvents, "sendMessage", function (args) {
 			let text = args[1].content.trim();
@@ -34,7 +29,7 @@ module.exports = class GrammarNazi extends Plugin {
 				const questionWords = ['who', 'what', 'when', 'where', 'why', 'how', 'can i'];
 				var question = false;
 				var textBeg = text.slice(0,6);
-				for(let k = 0; k < questionWords.length; k++){				
+				for(let k = 0; k < questionWords.length; k++){
 					question = (textBeg.includes(questionWords[k])) ? true : false;
 					if(question){
 				 	 break;
@@ -47,22 +42,10 @@ module.exports = class GrammarNazi extends Plugin {
 				var apoth = false;
 
 				const apothWords = ["doesnt", "cant", "wont", "dont", "ive", "id", "im", "shes", "hes", "its", "theres", "theyre", "youve", "youre", "couldnt", "shouldnt", "wouldnt", "lets", "thats"];
-				const apCorWords = ["doesn't", "can't", "won't", "don't", "I've", "I'd", "I'm", "she's", "he's", "it's", "there's", "they're", "you've", "you're", "couldn't", "shouldn't", "wouldn't", "let's", "that's"]; 
+				const apCorWords = ["doesn't", "can't", "won't", "don't", "I've", "I'd", "I'm", "she's", "he's", "it's", "there's", "they're", "you've", "you're", "couldn't", "shouldn't", "wouldn't", "let's", "that's"];
 				for(let k = 0; k < apothWords.length; k++){
 					apoth = (text.includes(apothWords[k])) ? true : false;
 
-					if (checkSpell) {
-						/*text = text.replace(" " + apothWords[k] + " ", " " + apCorWords[k] + "  ");
-
-						if (text.slice(0, apothWords[k].length) == apothWords[k]) {
-							text = text.replace(apothWords[k] + " ", apCorWords[k] + "  ");
-							}
-		
-						if (text.slice(text.length - apothWords[k].length) ==  apothWords[k]) {
-							text = text.replace(" " + apothWords[k], " " + apCorWords[k] + "  ");
-						}*/ // working on this
-						
-					} else {
 					text = text.replace(" " + apothWords[k] + " ", " " + apCorWords[k] + " ");
 
 					if (text.slice(0, apothWords[k].length) == apothWords[k]) {
@@ -75,7 +58,6 @@ module.exports = class GrammarNazi extends Plugin {
 				  }
 
 				}
-			}
 
 			if (exAbrv) {
 				var abrv = false;
@@ -98,11 +80,11 @@ module.exports = class GrammarNazi extends Plugin {
 					abrv = (text.includes(abrvWords[k])) ? true : false;
 
 					text = text.replace(" " + abrvWords[k] + " ", " " + fullAbrvWords[k] + " ");
-					
+
 					if (text.slice(0, abrvWords[k].length) == abrvWords[k]) {
 					text = text.replace(abrvWords[k] + " ", fullAbrvWords[k] + " ");
-					} 
-					
+					}
+
 					if (text.slice(text.length - abrvWords[k].length) ==  abrvWords[k]) {
 					text = text.replace(" " + abrvWords[k], " " + fullAbrvWords[k]);
 					}
@@ -112,38 +94,19 @@ module.exports = class GrammarNazi extends Plugin {
 
 			}
 
-			if (checkSpell) {
-				var textasafuckingarray = text.split(" ");
-				var newtext = "";
-				textasafuckingarray.forEach(function(substring) {
-				  if(substring.includes("'")) {
-					newtext = newtext + substring + " ";
-				  } else {
-						newtext = newtext + spellCheck.correct(substring) + " ";
-				  }
-				});
-				text = newtext;
-			  }
-					
 
 			if(question) {
-				if (checkSpell) {
-				text = text.replace(/.$/,"?");
-				} else {
-					text = text + "?";
-				}
-				if (text.slice(text.length-2) == "i?") { 
+				text = text + "?";
+
+				if (text.slice(text.length-2) == "i?") {
 					text = text.slice(0,text.length-2) + "I?"; // Correct sentences like "Who am I?"
-				} 
+				}
 			}
 
 
 			if (punct) {
-				if (checkSpell) {
-				text = (text[text.length - 1] == "!" || text[text.length - 1] == "?" || text[text.length - 1] == ".") ?  text : text = text.replace(/.$/,".");
-				} else {
 					text = (text[text.length - 1] == "!" || text[text.length - 1] == "?" || text[text.length - 1] == ".") ?  text : text = text + ".";
-				}
+
 			}
 
 			if (capt) {
@@ -163,7 +126,7 @@ module.exports = class GrammarNazi extends Plugin {
 			    args[1].content = text;
 			}
 
-			  
+
             return args;
 		}, true);
 }
