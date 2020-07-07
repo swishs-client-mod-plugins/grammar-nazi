@@ -6,9 +6,9 @@ const { getModule } = require("powercord/webpack");
 const Settings = require('./Settings')
 
 module.exports = class GrammarNazi extends Plugin {
-    async startPlugin() {
-        powercord.api.settings.registerSettings('Grammar Nazi', {
-            category: this.entityID,
+	async startPlugin() {
+		powercord.api.settings.registerSettings('Grammar Nazi', {
+			category: this.entityID,
 			label: 'Grammar Nazi',
 			render: Settings
 		})
@@ -28,84 +28,104 @@ module.exports = class GrammarNazi extends Plugin {
 			if (quWords) {
 				const questionWords = ['who', 'what', 'when', 'where', 'why', 'how', 'can i'];
 				var question = false;
-				var textBeg = text.slice(0,6);
-				for(let k = 0; k < questionWords.length; k++){
+				var textBeg = text.slice(0, 6);
+				for (let k = 0; k < questionWords.length; k++) {
 					question = (textBeg.includes(questionWords[k])) ? true : false;
-					if(question){
-				 	 break;
+					if (question) {
+						break;
 					}
-			  	}
+				}
 			}
 
 			// Apostrophe Words
 			if (apWords) {
-				var apoth = false;
+				const apothDict = {
+					"doesnt": "doesn't",
+					"cant": "can't",
+					"wont": "won't",
+					"dont": "don't",
+					"ive": "I've",
+					"id": "I'd",
+					"im": "I'm",
+					"shes": "she's",
+					"hes": "he's",
+					"its": "it's",
+					"theres": "there's",
+					"theyre": "they're",
+					"youve": "you've",
+					"youre": "you're",
+					"couldnt": "couldn't",
+					"shouldnt": "shouldn't",
+					"wouldnt": "wouldn't",
+					"lets": "let's",
+					"thats": "that's",
+					"wheres": "where's",
+				};
 
-				const apothWords = ["doesnt", "cant", "wont", "dont", "ive", "id", "im", "shes", "hes", "its", "theres", "theyre", "youve", "youre", "couldnt", "shouldnt", "wouldnt", "lets", "thats"];
-				const apCorWords = ["doesn't", "can't", "won't", "don't", "I've", "I'd", "I'm", "she's", "he's", "it's", "there's", "they're", "you've", "you're", "couldn't", "shouldn't", "wouldn't", "let's", "that's"];
-				for(let k = 0; k < apothWords.length; k++){
-					apoth = (text.includes(apothWords[k])) ? true : false;
-
-					text = text.replace(" " + apothWords[k] + " ", " " + apCorWords[k] + " ");
-
-					if (text.slice(0, apothWords[k].length) == apothWords[k]) {
-					text = text.replace(apothWords[k] + " ", apCorWords[k] + " ");
+				let newText = '';
+				//console.log(text.split);
+				text.split(' ').forEach(word => {
+					if (word in apothDict) {
+						newText += apothDict[word] + " ";
+					} else {
+						newText += word + " ";
 					}
+				});
 
-					if (text.slice(text.length - apothWords[k].length) ==  apothWords[k]) {
-					text = text.replace(" " + apothWords[k], " " + apCorWords[k]);
-					}
-				  }
-
-				}
-
-			if (exAbrv) {
-				var abrv = false;
-				const abrvWords = ["imo", "idk", "omg", "lmao", "brb", "rofl", "stfu", "ily", "lmk", "smh", "nvm", "lmfao"];
-				const fullAbrvWords = [
-					"in my opinion",
-					"I don't know",
-					"oh my god",
-					"laughing my ass off",
-					"be right back",
-					"rolling on the floor laughing",
-					"shut the fuck up",
-					"I love you <3",
-					"let me know",
-					"shaking my head",
-					"nevermind",
-					"laughing my fucking ass off"
-				];
-				for(let k = 0; k < abrvWords.length; k++){
-					abrv = (text.includes(abrvWords[k])) ? true : false;
-
-					text = text.replace(" " + abrvWords[k] + " ", " " + fullAbrvWords[k] + " ");
-
-					if (text.slice(0, abrvWords[k].length) == abrvWords[k]) {
-					text = text.replace(abrvWords[k] + " ", fullAbrvWords[k] + " ");
-					}
-
-					if (text.slice(text.length - abrvWords[k].length) ==  abrvWords[k]) {
-					text = text.replace(" " + abrvWords[k], " " + fullAbrvWords[k]);
-					}
-
+				if (newText[newText.length - 1] == " ") {
+					text = newText.substring(0, newText.length - 1);
+				} else {
+					text = newText;
 				}
 
 
 			}
 
+			if (exAbrv) {
+				const abrvDict = {
+					"imo": "in my opinion",
+					"idk": "I don't know",
+					"omg": "oh my god",
+					"lmao": "laughing my ass off",
+					"brb": "be right back",
+					"rofl": "rolling on the floor laughing",
+					"stfu": "shut the fuck up",
+					"ily": "I love you <3",
+					"lmk": "let me know",
+					"smh": "shaking my head",
+					"nvm": "nevermind",
+					"lmfao": "laughing my fucking ass off",
+				};
 
-			if(question) {
+				let newText = '';
+				//console.log(text.split);
+				text.split(' ').forEach(word => {
+					if (word in abrvDict) {
+						newText += abrvDict[word] + " ";
+					} else {
+						newText += word + " ";
+					}
+				});
+
+				if (newText[newText.length - 1] == " ") {
+					text = newText.substring(0, newText.length - 1);
+				} else {
+					text = newText;
+				}
+			}
+
+
+			if (question) {
 				text = text + "?";
 
-				if (text.slice(text.length-2) == "i?") {
-					text = text.slice(0,text.length-2) + "I?"; // Correct sentences like "Who am I?"
+				if (text.slice(text.length - 2) == "i?") {
+					text = text.slice(0, text.length - 2) + "I?"; // Correct sentences like "Who am I?"
 				}
 			}
 
 
 			if (punct) {
-					text = (text[text.length - 1] == "!" || text[text.length - 1] == "?" || text[text.length - 1] == ".") ?  text : text = text + ".";
+				text = (text[text.length - 1] == "!" || text[text.length - 1] == "?" || text[text.length - 1] == ".") ? text : text = text + ".";
 
 			}
 
@@ -116,20 +136,20 @@ module.exports = class GrammarNazi extends Plugin {
 				text = text.replace(/ i /g, " I ");
 			}
 
-			if (text.toLowerCase().slice(0,8) == "https://" || text.slice(0,7) == "http://") { // Message Link Detection
+			if (text.toLowerCase().slice(0, 8) == "https://" || text.slice(0, 7) == "http://") { // Message Link Detection
 				text = pretext;
-			} else if(text.slice(0,3) == "```") { // Code Block Detection
+			} else if (text.slice(0, 3) == "```") { // Code Block Detection
 				text = pretext;
-			} else if(text.charAt(0) == "." || text.charAt(0) == "!" || text.charAt(0) == "?" || text.charAt(0) == ";" || text.charAt(0) == ";;" || text.charAt(0) == ":") { // ill fix this line twomarrow t-t
+			} else if (text.charAt(0) == "." || text.charAt(0) == "!" || text.charAt(0) == "?" || text.charAt(0) == ";" || text.charAt(0) == ";;" || text.charAt(0) == ":") { // ill fix this line twomarrow t-t
 				text = pretext;
 			} else {
-			    args[1].content = text;
+				args[1].content = text;
 			}
 
 
-            return args;
+			return args;
 		}, true);
-}
+	}
 
 	pluginWillUnload() {
 		powercord.api.settings.unregisterSettings('Grammar Nazi')
