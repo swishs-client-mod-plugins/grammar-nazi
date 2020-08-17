@@ -29,6 +29,9 @@ module.exports = class GrammarNazi extends Plugin {
 				const questionWords = ['who', 'what', 'when', 'where', 'why', 'how', 'can i'];
 				var question = false;
 				var textBeg = text.slice(0, 6);
+				if (text.match(/$\W/g) != Null) {
+					question = false;
+				}
 				for (let k = 0; k < questionWords.length; k++) {
 					question = (textBeg.includes(questionWords[k])) ? true : false;
 					if (question) {
