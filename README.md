@@ -1,13 +1,12 @@
 # grammar-nazi
-A powercord plugin to automatically check your spelling.
+A Powercord plugin that automatically punctuates, capitalizes, and spellchecks your sentences.
 
 ## Features
-* Capitalize the first letter of every message.
-* Always add punctuation at the end.
-* Simple Question Detection.
-* Toggleable Options.
+* Capitalizes the first letter of every sentence.
+* Adds proper punctuation at the end of every message.
+* Custom Dictionary interactable through chat commands.
 
 ## Issues & Suggestions
 Feel free to suggest ideas or label issues in this repo!
 
-Alternatively you can contact me at: Swishilicous#2339
+Alternatively you can contact me at: Swishilicous#3200

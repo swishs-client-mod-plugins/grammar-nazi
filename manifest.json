@@ -1,7 +1,7 @@
 {
-  "name": "Grammar Nazi",
-  "version": "0.3",
-  "description": "Forces you to use obnoxiously good grammar.",
-  "author": "Swishilicous#2339",
-  "license": "Unlicensed"
+    "name": "Grammar Nazi",
+    "version": "1.0.0",
+    "description": "Automatic punctuation, capitalization, and spellchecking. Also supports custom dictionary's which you can use to tweak the plugin to your liking.",
+    "author": "Swishilicous",
+    "license": "MIT."
 }
