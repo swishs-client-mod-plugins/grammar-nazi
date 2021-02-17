@@ -15,21 +15,21 @@ export default class GrammarNazi extends Plugin {
       command: 'addword',
       aliases: ['aw', 'aword'],
 			description: 'Add a key/value pair to the custom dictionary.',
-			usage: '{c} "key" "value"', 
+			usage: '{c} "key" "value"',
 			executor: (args) => this.addDict(args)
     })
     vizality.api.commands.registerCommand({
       command: 'removeword',
       aliases: ['rm', 'rmword'],
 			description: 'Remove a key/value pair from the custom dictionary.',
-			usage: '{c} "key"', 
+			usage: '{c} "key"',
 			executor: (args) => this.removeDict(args)
 		})
 		vizality.api.commands.registerCommand({
       command: 'listwords',
       aliases: ['lw', 'dictionary', 'dict'],
 			description: 'View the current custom dictionary.',
-			usage: '{c}', 
+			usage: '{c}',
 			executor: () => this.viewDict()
     })
 
@@ -94,9 +94,9 @@ export default class GrammarNazi extends Plugin {
       const { BOT_AVATARS } = await getModule(['BOT_AVATARS'])
       const { createBotMessage } = await getModule(['createBotMessage'])
       const { getChannelId } = getModule(['getLastSelectedChannelId'], false)
-        
+
       const receivedMessage = createBotMessage(getChannelId(), {})
-        
+
       BOT_AVATARS.GrammarNaziAvatar = 'https://i.imgur.com/wUcHvh0.png'
       receivedMessage.author.username = 'Grammar Nazi'
       receivedMessage.author.avatar = 'GrammarNaziAvatar'
@@ -110,7 +110,7 @@ export default class GrammarNazi extends Plugin {
         receivedMessage.content = 'Insufficent arguments; both a keyword and value must be supplied.'
         return receiveMessage(receivedMessage.channel_id, receivedMessage)
       }
-        
+
       /* Duplicate Check */
       let customDictionary = this.settings.get('customDictionary')
       if (newargs[0] in customDictionary) {
@@ -144,7 +144,7 @@ export default class GrammarNazi extends Plugin {
 
       /* Arguments Check */
       if (!(args.join(' ').includes('"'))) {
-        receivedMessage.content = 'Insufficent arguments; please provide both a keyword and a value.'
+        receivedMessage.content = 'Insufficent arguments; please provide a keyword that exists in the dictionary.'
         return receiveMessage(receivedMessage.channel_id, receivedMessage)
       }
 
@@ -159,7 +159,7 @@ export default class GrammarNazi extends Plugin {
         return receiveMessage(receivedMessage.channel_id, receivedMessage)
       }
     }
-    
+
 	  async viewDict() {
       /* Custom Bot Attributes */
       const { BOT_AVATARS } = await getModule(['BOT_AVATARS'])
