@@ -44,7 +44,7 @@ export default class GrammarNazi extends Plugin {
     }
 
     /* Inject on Message Send */
-    const MessageEvents = await getModule(['sendMessage'])
+    const MessageEvents = await getModule('sendMessage')
 		patch('message-send', MessageEvents, 'sendMessage', (args) => {
       let text = args[1].content.trim()
       let split = text.split(' ')
@@ -91,9 +91,9 @@ export default class GrammarNazi extends Plugin {
 
     async addDict(args) {
       /* Custom Bot Attributes */
-      const { BOT_AVATARS } = await getModule(['BOT_AVATARS'])
-      const { createBotMessage } = await getModule(['createBotMessage'])
-      const { getChannelId } = getModule(['getLastSelectedChannelId'], false)
+      const { BOT_AVATARS } = await getModule('BOT_AVATARS')
+      const { createBotMessage } = await getModule('createBotMessage')
+      const { getChannelId } = getModule('getLastSelectedChannelId', false)
 
       const receivedMessage = createBotMessage(getChannelId(), {})
 
@@ -128,9 +128,9 @@ export default class GrammarNazi extends Plugin {
 
     async removeDict(args) {
       /* Custom Bot Attributes */
-      const { BOT_AVATARS } = await getModule(['BOT_AVATARS'])
-      const { createBotMessage } = await getModule(['createBotMessage'])
-      const { getChannelId } = getModule(['getLastSelectedChannelId'], false)
+      const { BOT_AVATARS } = await getModule('BOT_AVATARS')
+      const { createBotMessage } = await getModule('createBotMessage')
+      const { getChannelId } = getModule('getLastSelectedChannelId', false)
 
       const receivedMessage = createBotMessage(getChannelId(), {})
 
@@ -162,9 +162,9 @@ export default class GrammarNazi extends Plugin {
 
 	  async viewDict() {
       /* Custom Bot Attributes */
-      const { BOT_AVATARS } = await getModule(['BOT_AVATARS'])
-      const { createBotMessage } = await getModule(['createBotMessage'])
-      const { getChannelId } = getModule(['getLastSelectedChannelId'], false)
+      const { BOT_AVATARS } = await getModule('BOT_AVATARS')
+      const { createBotMessage } = await getModule('createBotMessage')
+      const { getChannelId } = getModule('getLastSelectedChannelId', false)
 
       const receivedMessage = createBotMessage(getChannelId(), {})
 
