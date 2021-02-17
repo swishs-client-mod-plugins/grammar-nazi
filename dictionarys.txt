@@ -1,5 +1,5 @@
 Note: If you want to add any values from this you must edit the "grammar-nazi.json" file located in 
-[PC Home Dir]/powercord/settings while discord is closed; discord must be closed for it to save.
+[VZ Home Directory]/settings while discord is closed; discord must be closed for it to save.
 
 General
     "i": "I",

@@ -1,7 +1,7 @@
 {
     "name": "Grammar Nazi",
     "version": "1.0.0",
-    "description": "Automatic punctuation, capitalization, and spellchecking. Also supports custom dictionary's which you can use to tweak the plugin to your liking.",
-    "author": "Swishilicous",
+    "description": "Automatic punctuation, capitalization, and word comparison with a custom dictionary.",
+    "author": "Swishilicous#3200",
     "license": "MIT."
 }
