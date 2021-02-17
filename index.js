@@ -50,7 +50,7 @@ export default class GrammarNazi extends Plugin {
       let split = text.split(' ')
       let customDictionary = this.settings.get('customDictionary')
 
-      if (text.indexOf('```') === -1 && this.settings.get('nazify')) {
+      if (text.indexOf('```') === -1 && this.settings.get('nazify') && text.charAt(0) !== '.') {
       if (this.settings.get('dictionary')) text = split.map(c => c in customDictionary ? customDictionary[c] : c).join(' ')
       if (this.settings.get('punctuation') && (/[a-z0-9]$/gmi).test(text) && split[split.length-1].indexOf('http') === -1 ) text += '.'
       if (this.settings.get('capitalization') && text.indexOf('http') != 0) text = text.charAt(0).toUpperCase() + text.substring(1)}
