@@ -20,3 +20,7 @@ For installation, go to **Plugins -> Open a CMD / Powershell / Terminal / Gitbas
 ```
 git clone https://github.com/Swishilicous/grammar-nazi
 ```
+Or run this command in the Vizality Client:
+```
+.plugin install https://github.com/Swishilicous/grammar-nazi
+```
