@@ -1,7 +1,7 @@
 import { React } from '@vizality/webpack'
-import { SwitchItem } from '@vizality/components/settings'
+import { SwitchItem, RadioGroup } from '@vizality/components/settings'
 
-export default ({getSetting, toggleSetting }) => <>
+export default ({getSetting, toggleSetting, updateSetting }) => <>
       <div>
         <SwitchItem
           note='Adds a period at the end of every message. Ignores question marks and exclamation points.'
@@ -24,15 +24,26 @@ export default ({getSetting, toggleSetting }) => <>
         >
           Custom Dictionary
         </SwitchItem>
-        <SwitchItem
-          note={<span>
-            If the switch is set to true it will be in the chat bar, if it is false it will be set to the header bar.<br/>
-            <b style={{ color: 'rgb(240, 71, 71)' }}>HEADS UP:</b> You must reload the plugin for changes to take effect!</span>
-          }
-          value= { getSetting('location') }
-          onChange={ () => { toggleSetting('location') }}
+        <RadioGroup
+          required={ false }
+          onChange={ val => { updateSetting('location', val.value), val.value ? 'none' : updateSetting('nazify', true) }}
+          value={ getSetting('location', 'channel-text-area-container') }
+          options={[
+            {
+              name: 'Typing Box',
+              value: 'channel-text-area-container'
+            },
+            {
+              name: 'Header Bar',
+              value: 'header-bar-container',
+            },
+            {
+              name: 'None',
+              value: 'none'
+            }
+          ]}
         >
-          Switch Toggle Button Location
-        </SwitchItem>
+          Toggle Button Location
+        </RadioGroup>
       </div>
 </>
