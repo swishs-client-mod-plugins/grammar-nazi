@@ -60,23 +60,22 @@ export default class GrammarNazi extends Plugin {
     }, true)
 
     /* Inject Toggle Button */
-    if (this.settings.get('location')) {
-      const ChannelTextAreaContainer = getModule((m) => m.type && m.type.render && m.type.render.displayName === 'ChannelTextAreaContainer', false)
-      patch('chat-button', ChannelTextAreaContainer.type, 'render', (args, res) => {
-          const props = findInReactTree(res, (r) => r && r.className && r.className.indexOf('buttons-') == 0)
-          props.children.unshift(<TextContainerButton settings={this.settings}/>)
-          return res
-      })
-      ChannelTextAreaContainer.type.render.displayName = 'ChannelTextAreaContainer'
-    }
-
-    if (!this.settings.get('location')) {
-      const HeaderBarContainer = await getModuleByDisplayName('HeaderBarContainer')
-      patch('header-bar', HeaderBarContainer.prototype, 'render', (args, res)=>{
-          res.props.toolbar.props.children.unshift(<HeaderBarButton settings={this.settings} bartype={HeaderBarContainer.Icon}/>)
-          return res
-      })
-    }
+    const ChannelTextAreaContainer = getModule((m) => m.type && m.type.render && m.type.render.displayName === 'ChannelTextAreaContainer', false)
+    patch('chat-button', ChannelTextAreaContainer.type, 'render', (args, res) => {
+      if (this.settings.get('location') === 'channel-text-area-container') {
+        const props = findInReactTree(res, (r) => r && r.className && r.className.indexOf('buttons-') == 0)
+        props.children.unshift(<TextContainerButton settings={this.settings}/>)
+      }
+        return res
+    })
+    ChannelTextAreaContainer.type.render.displayName = 'ChannelTextAreaContainer'
+    
+    const HeaderBarContainer = await getModuleByDisplayName('HeaderBarContainer')
+    patch('header-bar', HeaderBarContainer.prototype, 'render', (args, res)=> {
+      if (this.settings.get('location') === 'header-bar-container')
+        res.props.toolbar.props.children.unshift(<HeaderBarButton settings={this.settings} bartype={HeaderBarContainer.Icon}/>)
+      return res
+    })
 }
 
     stop() {
